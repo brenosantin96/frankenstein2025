@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "description": "Finalizar o relatório mensal",
+    "isFinished": false,
+    "dateCreated": "2025-02-08T10:00:00.000Z",
+    "dateToFinish": "2025-03-28T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "description": "Enviar e-mails de follow-up",
+    "isFinished": true,
+    "dateCreated": "2025-02-06T14:30:00.000Z",
+    "dateFinished": "2025-02-07T09:45:00.000Z",
+    "dateToFinish": "2025-04-20T10:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "description": "Revisar código do novo módulo",
+    "isFinished": false,
+    "dateCreated": "2025-02-08T12:15:00.000Z",
+    "dateToFinish": "2025-02-07T10:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "description": "Agendar reunião com o cliente",
+    "isFinished": true,
+    "dateCreated": "2025-02-05T16:00:00.000Z",
+    "dateFinished": "2025-02-06T11:20:00.000Z"
+    
+  },
+  {
+    "id": 5,
+    "description": "Atualizar documentação do projeto",
+    "isFinished": false,
+    "dateCreated": "2025-02-07T08:45:00.000Z",
+    "dateToFinish": "2025-02-15T10:00:00.000Z"
+  }
+]
