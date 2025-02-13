@@ -1,32 +1,20 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import ThemeToggler from "../components/themeToggler";
-import { Context } from "@/contexts/themeContext";
 import { Task } from "@/types/Task";
 import { useApi } from "@/api/api";
-import { formatDate } from "../utils/Formatters";
-
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { TaskBox } from "@/components/TaskBox";
+import { Icon } from '../components/svg/Icon';
 
 function Main() {
   const router = useRouter();
 
-  const context = useContext(Context);
-  if (!context) return null;
-
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
+    setSelectedDate(new Date()); // Evita diferenças entre SSR e CSR
     getAllTasks();
   }, []);
 
@@ -52,15 +40,10 @@ function Main() {
 
   return (
     <>
-      <div className="h-screen text-2xl"
-        style={{
-          backgroundColor: context.theme === "LIGHT" ? context.lightSchemeColor.bgcolor : context.darkSchemeColor.bgcolor,
-          color: context.theme === "LIGHT" ? context.lightSchemeColor.textColor : context.darkSchemeColor.textColor,
-        }}
-      >
+      <div className="h-screen text-2xl bg-green-darkmoss text-beige-cornsilk">
         <div className="container mx-auto">
           <div id="HeaderArea" className="flex justify-end pr-10 pt-5 ">
-            <ThemeToggler />
+
           </div>
 
           <div className="flex justify-center items-center mt-20">
@@ -73,16 +56,38 @@ function Main() {
                 setDate={setSelectedDate} // Passando setDate como prop
               />
 
-              <button
-                className="p-3 h-15 bg-blue-400 rounded-md font-semibold"
-                style={{
-                  backgroundColor: context.theme === "LIGHT" ? context.lightSchemeColor.buttonBGColor : context.darkSchemeColor.buttonBGColor,
-                  color: context.theme === "LIGHT" ? context.lightSchemeColor.buttonTextColor : context.darkSchemeColor.buttonTextColor,
-                }}
-                onClick={() => router.push("/login")}
-              >
-                Login Page!
-              </button>
+              <h2 className="mb-3">Hola!!!</h2>
+
+              <div className="p-5">
+                <Icon svg="home" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="key" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="user" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="backward" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="leftarrow" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="login" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="rightarrow" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="downarrow" width={30} height={30} color="red" />
+              </div>
+              <div className="p-5">
+                <Icon svg="uparrow" width={30} height={30} color="red" />
+              </div>
+            
+
+
             </div>
           </div>
         </div>

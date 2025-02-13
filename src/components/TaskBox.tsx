@@ -1,11 +1,9 @@
 import { Calendar } from "@/components/ui/calendar";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
 import { Task } from "@/types/Task";
 import { formatDate } from "@/utils/Formatters";
+import { useState } from "react";
+import { TaskComponent } from "./TaskComponent";
 
 type TaskBoxProps = {
     date: Date;
@@ -14,16 +12,24 @@ type TaskBoxProps = {
 }
 
 export const TaskBox = ({ date, setDate, tasks }: TaskBoxProps) => {
+
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+    const handleDateSelect = (selectedDate: Date | undefined) => {
+        setDate(selectedDate); //updating selectedDate
+        setIsPopoverOpen(false);
+    }
+
     return (
-        <div id="TaskBox" className="h-[430px] w-[600px] rounded-md bg-[#372554] border-white border p-2">
+        <div id="TaskBox" className="h-[430px] w-[600px] rounded-md bg-green-pakistan p-2">
             <div id="headerTaskBox" className="text-center font-bold text-2xl pb-3">
-                <Popover>
-                    <PopoverTrigger>{formatDate(date)}</PopoverTrigger>
+                <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} >
+                    <PopoverTrigger onClick={() => setIsPopoverOpen(true)}>{formatDate(date)}</PopoverTrigger>
                     <PopoverContent>
                         <Calendar
                             mode="single"
                             selected={date}
-                            onSelect={setDate} // Passando a função setDate diretamente
+                            onSelect={handleDateSelect} // Passando a função setDate diretamente
                             className="rounded-md border"
                         />
                     </PopoverContent>
@@ -32,11 +38,7 @@ export const TaskBox = ({ date, setDate, tasks }: TaskBoxProps) => {
 
             <div id="contentTaskBox">
                 {tasks.map((task) => (
-                    <div key={task.id}>
-                        <div className="py-1 text-xl pl-2">
-                            <span><input type="checkbox" /> {task.description}</span>
-                        </div>
-                    </div>
+                    <TaskComponent task={task} key={task.id} />
                 ))}
             </div>
         </div>

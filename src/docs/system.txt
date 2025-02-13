@@ -1,0 +1,25 @@
+2. Funcionalidades Essenciais
+
+Criação de tarefas:
+-Adicionar título, descrição, data de vencimento e prioridade.
+-Possibilidade de anexar arquivos ou links.
+
+Organização:
+-Categorias, tags ou etiquetas para classificar tarefas.
+-Listas ou projetos para agrupar tarefas relacionadas.
+
+Priorização:
+-Definir níveis de prioridade (alta, média, baixa).
+-Ordenar tarefas por data, prioridade ou status.
+
+Lembretes e Notificações:
+-Alertas para prazos próximos ou tarefas atrasadas.
+-Integração com calendários (Google Calendar, Outlook, etc.).
+
+Colaboração:
+-Compartilhamento de tarefas com outras pessoas.
+-Comentários ou discussões em tarefas específicas.
+
+Status e Progresso:
+-Marcar tarefas como concluídas, em andamento ou pendentes.
+-Visualizar o progresso geral de projetos ou listas.
