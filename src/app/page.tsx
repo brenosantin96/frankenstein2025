@@ -40,7 +40,7 @@ function Main() {
 
   return (
     <>
-      <div className="h-screen text-2xl bg-green-darkmoss text-beige-cornsilk">
+      <div className="h-screen text-2xl bg-beige-cornsilk text-green-pakistan">
         <div className="container mx-auto">
           <div id="HeaderArea" className="flex justify-end pr-10 pt-5 ">
 
@@ -55,38 +55,6 @@ function Main() {
                 tasks={tasks}
                 setDate={setSelectedDate} // Passando setDate como prop
               />
-
-              <h2 className="mb-3">Hola!!!</h2>
-
-              <div className="p-5">
-                <Icon svg="home" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="key" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="user" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="backward" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="leftarrow" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="login" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="rightarrow" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="downarrow" width={30} height={30} color="red" />
-              </div>
-              <div className="p-5">
-                <Icon svg="uparrow" width={30} height={30} color="red" />
-              </div>
-            
-
 
             </div>
           </div>

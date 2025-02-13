@@ -21,7 +21,7 @@ export const TaskBox = ({ date, setDate, tasks }: TaskBoxProps) => {
     }
 
     return (
-        <div id="TaskBox" className="h-[430px] w-[600px] rounded-md bg-green-pakistan p-2">
+        <div id="TaskBox" className="h-[430px] w-[600px] rounded-md bg-green-darkmoss text-beige-cornsilk p-2">
             <div id="headerTaskBox" className="text-center font-bold text-2xl pb-3">
                 <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} >
                     <PopoverTrigger onClick={() => setIsPopoverOpen(true)}>{formatDate(date)}</PopoverTrigger>
