@@ -43,7 +43,7 @@ function Main() {
       <div className="h-screen text-2xl bg-beige-cornsilk text-green-pakistan">
         <div className="container mx-auto">
           <div id="HeaderArea" className="flex justify-end pr-10 pt-5 ">
-
+            
           </div>
 
           <div className="flex justify-center items-center mt-20">

@@ -7,6 +7,9 @@ import Login from './login.svg';
 import Key from './key.svg';
 import User from './user.svg';
 import Home from './home.svg';
+import Logo from './logo.svg'
+import Logo2 from './logo2.svg'
+import Logo3 from './logo3.svg'
 
 type Props = {
   svg: string;
@@ -25,6 +28,9 @@ const icons = {
   key: Key,
   user: User,
   home: Home,
+  logo: Logo,
+  logo2: Logo2,
+  logo3: Logo3,
 };
 
 export const Icon = ({ svg, color = "black", width = 24, height = 24 }: Props) => {
