@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import ThemeToggler from "../../components/themeToggler";
 import { Icon } from "../../components/svg/Icon";
 import { Input01 } from "@/components/Input01";
+import Link from "next/link";
 
 function LoginPage() {
   const router = useRouter();
@@ -15,11 +16,12 @@ function LoginPage() {
 
   return (
     <>
-      <div className={`h-screen text-2xl w-[320px] bg-red-50 overflow-hidden`}>
+      <div className={`h-screen text-2xl overflow-hidden`}>
         <div className="container mx-auto overflow-x-hidden overflow-y-hidden">
 
           <div id="HeaderArea" className="flex h-16 pl-4">
             <div>
+              
               <img src="./logopng.png" alt="" />
             </div>
           </div>
@@ -27,7 +29,7 @@ function LoginPage() {
           <div className="h-[456px] flex justify-center items-center flex-col mt-16">
 
             <div className="px-9 md:px-0 text-zinc-800 flex justify-center items-center flex-col rounded-md ">
-              <div id="BodyTopArea" className="flex flex-row md:flex-row items-center w-full ">
+              <div id="BodyTopArea" className="relative flex flex-row md:flex-row items-center w-full ">
                 <div className="flex flex-col justify-center items-start font-bebas md:items-start md:mr-8 z-10">
                   <h2 className="text-3xl pb-2 text-left text-wrap drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
                     Aquí
@@ -47,7 +49,7 @@ function LoginPage() {
                 </div>
               </div>
 
-              <div className="mb-4 flex flex-col z-10">
+              <div className="mb-4 flex flex-col z-20">
                 <Input01 inputValue={loginInput}
                   labelHtmlFor="loginInput"
                   labelText="Login"
@@ -62,7 +64,7 @@ function LoginPage() {
                 />
               </div>
 
-              <div className="mb-4 flex flex-col">
+              <div className="mb-4 flex flex-col z-20">
                 <Input01 inputValue={passwordInput}
                   labelHtmlFor="passwordInput"
                   labelText="Password"
@@ -77,12 +79,15 @@ function LoginPage() {
                 />
               </div>
 
-              <button className="p-3 h-12 bg-green-pakistan text-center flex justify-center items-center text-white rounded-md font-semibold">
+              <button className="p-3 mt-5 h-12 w-36 bg-green-pakistan text-center flex justify-center items-center text-white rounded-md font-semibold">
                 Login
               </button>
+              <div className="mt-3">
+                <h3 className="mt-2 text-sm text-[#646363]">¿Aún no tienes cuenta? <span className="text-[#283618] font-bold"> <Link href={"/register"}>Registrate</Link>.</span></h3>
+              </div>
             </div>
 
-            <Icon svg="logo2" />
+            
 
             <div
               className={`p-3 h-15 rounded-md font-semibold mt-10`}>

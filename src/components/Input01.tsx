@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Icon } from "./svg/Icon";
 
 type Input01Props = {
@@ -16,11 +16,20 @@ type Input01Props = {
 
 }
 
-export const Input01 = ({ labelHtmlFor, labelText, colorLabel = "#949494", typeInput, icon, iconWidth, iconHeight, iconColor, onChange, inputValue, inputHeightTailwind }: Input01Props) => {
+export const Input01 = ({ labelHtmlFor, labelText, colorLabel = "text-[#949494]", typeInput, icon, iconWidth, iconHeight, iconColor, onChange, inputValue, inputHeightTailwind }: Input01Props) => {
+
+    console.log("Color Label: ", colorLabel)
+
+    // Depuração: Monitora mudanças no colorLabel
+    useEffect(() => {
+        console.log("Color Label:", colorLabel);
+    }, [colorLabel]);
+
+    
 
     return (
         <React.Fragment>
-            <label htmlFor={labelHtmlFor} className="text-sm font-bold" style={{ color: colorLabel }}>{labelText}</label>
+            <label htmlFor={labelHtmlFor} className={`text-sm ${colorLabel}`} >{labelText}</label>
             <div className="flex pl-1 bg-white text-gray-700 border text-ice-dark-blue border-ice-dark-blue rounded-md">
                 {icon !== undefined &&
                     <div className="flex justify-center items-center">

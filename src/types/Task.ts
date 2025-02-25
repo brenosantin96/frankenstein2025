@@ -3,7 +3,7 @@ export type Task = {
     description: string;
     isFinished: boolean;
     dateCreated: Date;
+    dateToFinish: Date;
     dateFinished: Date | null;
-    dateToFinish: Date | null;
 
 }

@@ -4,13 +4,18 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Task } from "@/types/Task";
 import { useApi } from "@/api/api";
-import { TaskBox } from "@/components/TaskBox";
-import { Icon } from '../components/svg/Icon';
+import { Popover, PopoverContent, PopoverTrigger, } from "@/components/ui/popover";
+import Header from "@/components/Header";
+import { Calendar } from "@/components/ui/calendar";
+import { formatDate } from "@/utils/Formatters";
+import { TaskComponent } from "@/components/TaskComponent";
+import { endOfDay, startOfDay } from "date-fns";
 
 function Main() {
   const router = useRouter();
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -21,6 +26,7 @@ function Main() {
   const getAllTasks = async () => {
     const responseTasksApi = await useApi.getTasks();
 
+    //manageDates
     try {
       const formattedTasks: Task[] = responseTasksApi.map((task) => ({
         id: task.id,
@@ -28,7 +34,7 @@ function Main() {
         isFinished: task.isFinished,
         dateCreated: new Date(task.dateCreated),
         dateFinished: task.dateFinished ? new Date(task.dateFinished) : null,
-        dateToFinish: task.dateToFinish ? new Date(task.dateToFinish) : null,
+        dateToFinish: new Date(task.dateToFinish),
       }));
 
       console.log(formattedTasks);
@@ -38,25 +44,48 @@ function Main() {
     }
   };
 
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    setSelectedDate(selectedDate); //updating selectedDate
+    setIsPopoverOpen(false);
+  }
+
+
   return (
     <>
       <div className="h-screen text-2xl bg-beige-cornsilk text-green-pakistan">
         <div className="container mx-auto">
-          <div id="HeaderArea" className="flex justify-end pr-10 pt-5 ">
-            
-          </div>
+          <Header svgLeft="backward" svgRight="menu" title="Tasks" />
 
-          <div className="flex justify-center items-center mt-20">
-            <div className="justify-center items-center">
-              <h2 className="text-[36px] font-semibold font-inter text-center pb-5">Tasks</h2>
+          <div className="flex justify-center items-center flex-col mt-10 bg-red-300">
 
-              <TaskBox
-                date={selectedDate as Date}
-                tasks={tasks}
-                setDate={setSelectedDate} // Passando setDate como prop
-              />
-
+            <div id="datePicker">
+              <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} >
+                <PopoverTrigger onClick={() => setIsPopoverOpen(true)}>{formatDate(selectedDate as Date)}</PopoverTrigger>
+                <PopoverContent>
+                  <Calendar
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={handleDateSelect} // Passando a função setDate diretamente
+                    className="rounded-md border"
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
+            <div id="todayTasks">
+              {tasks
+                .filter((task) => {
+                  // Filtra as tarefas que estão dentro do intervalo de datas
+                  const start = startOfDay(selectedDate as Date);
+                  const end = endOfDay(selectedDate as Date);
+                  return task.dateToFinish >= start && task.dateToFinish <= end;
+                })
+                .map((task) => (
+                  // Renderiza o componente TaskComponent para cada tarefa filtrada
+                  <TaskComponent task={task} key={task.id} />
+                ))}
+            </div>
+
+
           </div>
         </div>
       </div>
