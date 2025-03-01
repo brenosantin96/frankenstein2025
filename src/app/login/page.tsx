@@ -6,6 +6,8 @@ import ThemeToggler from "../../components/themeToggler";
 import { Icon } from "../../components/svg/Icon";
 import { Input01 } from "@/components/Input01";
 import Link from "next/link";
+import { useValidation } from "@/hooks/useValidation";
+import { useApi } from "@/api/api";
 
 function LoginPage() {
   const router = useRouter();
@@ -14,6 +16,37 @@ function LoginPage() {
   const [passwordInput, setPasswordInput] = useState("");
 
 
+
+  const { errors, validate } = useValidation({
+
+    loginInput: { minLength: 2, required: true, email: true },
+    passwordInput: { minLength: 4, required: true }
+  })
+
+  const signIn = async (email: string, password: string) => {
+
+    console.log(email, password);
+
+    if (!validate({ loginInput, passwordInput })) return;
+
+    try {
+      let successResponse = await useApi.signIn(email, password);
+      console.log(successResponse);
+      router.push("/");
+
+    } catch (error: any) {
+      console.log(error);
+      if (error.response.data) {
+        alert(`Ocurrió un error: ${error.response.data.message}`);
+      }
+      if (!error.response.data) {
+        alert(`Ocurrió un error`);
+      }
+    }
+
+
+  }
+
   return (
     <>
       <div className={`h-screen text-2xl overflow-hidden`}>
@@ -21,7 +54,7 @@ function LoginPage() {
 
           <div id="HeaderArea" className="flex h-16 pl-4">
             <div>
-              
+
               <img src="./logopng.png" alt="" />
             </div>
           </div>
@@ -62,6 +95,7 @@ function LoginPage() {
                   iconWidth={20}
                   iconColor="#374151"
                 />
+                {errors.loginInput && <p className="text-red-500 text-sm font-bold">{errors.loginInput}</p>}
               </div>
 
               <div className="mb-4 flex flex-col z-20">
@@ -77,9 +111,12 @@ function LoginPage() {
                   iconWidth={20}
                   iconColor="#374151"
                 />
+                {errors.passwordInput && <p className="text-red-500 text-sm font-bold">{errors.passwordInput}</p>}
               </div>
 
-              <button className="p-3 mt-5 h-12 w-36 bg-green-pakistan text-center flex justify-center items-center text-white rounded-md font-semibold">
+              <button className="p-3 mt-5 h-12 w-36 bg-green-pakistan text-center flex justify-center items-center text-white rounded-md font-semibold"
+                onClick={() => signIn(loginInput, passwordInput)}
+              >
                 Login
               </button>
               <div className="mt-3">
@@ -87,7 +124,7 @@ function LoginPage() {
               </div>
             </div>
 
-            
+
 
             <div
               className={`p-3 h-15 rounded-md font-semibold mt-10`}>

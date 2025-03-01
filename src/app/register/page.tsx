@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggler from "../../components/themeToggler";
 import { Icon } from "../../components/svg/Icon";
+import { useValidation } from "@/hooks/useValidation"; // Importando o hook
 import { Input01 } from "@/components/Input01";
 import Link from "next/link";
+import { useApi } from "@/api/api";
 
 function RegisterPage() {
     const router = useRouter();
@@ -13,6 +15,41 @@ function RegisterPage() {
     const [nameInput, setNameInput] = useState("");
     const [emailInput, setEmailInput] = useState("");
     const [passwordInput, setPasswordInput] = useState("");
+
+
+    const { errors, validate } = useValidation({
+        nameInput: { required: true, minLength: 2 },
+        emailInput: { required: true, email: true },
+        passwordInput: { required: true, minLength: 4 },
+    });
+
+
+    const signUpUser = async (name: string, email: string, password: string) => {
+
+        console.log("Entrou em signUpUser");
+
+        if (!validate({ nameInput, emailInput, passwordInput })) return;
+
+        try {
+            let successResponse = await useApi.signUp(name, email, password);
+            console.log(successResponse);
+            alert("Usuario creado con éxito");
+            router.push("/login");
+
+        } catch (error: any) {
+            console.log(error);
+            if(error.response.data){
+                alert(`Ocurrió un error: ${error.response.data.message}`);
+            }
+            if(!error.response.data){
+                alert(`Ocurrió un error`);
+            }
+        }
+
+        //aqui vou ter que retornar no front se deu algum erro na requisicao......
+        //se deu erro tenho que disparar o erro para o usuario
+
+    }
 
 
     return (
@@ -59,6 +96,7 @@ function RegisterPage() {
                                         key={"nameInput"}
                                         colorLabel="text-[#444]"
                                     />
+                                    {errors.nameInput && <p className="text-red-500 text-sm font-bold">{errors.nameInput}</p>}
                                 </div>
 
                                 <div className="mb-1 flex flex-col">
@@ -71,6 +109,7 @@ function RegisterPage() {
                                         key={"emailInput"}
                                         colorLabel="text-[#CCC]"
                                     />
+                                     {errors.emailInput && <p className="text-red-500 text-sm font-bold">{errors.emailInput}</p>}
                                 </div>
 
                                 <div className="mb-1 flex flex-col">
@@ -83,10 +122,11 @@ function RegisterPage() {
                                         key={"passwordInput"}
                                         colorLabel="text-[#CCC]"
                                     />
+                                    {errors.passwordInput && <p className="text-red-500 text-sm font-bold">{errors.passwordInput}</p>}
                                 </div>
 
                                 <button className="p-3 mt-5 h-12 w-36 bg-green-pakistan text-center flex justify-center items-center text-white rounded-md font-semibold"
-                                    onClick={()=> router.push("/")}
+                                    onClick={() => signUpUser(nameInput, emailInput, passwordInput)}
                                 >
                                     Registrar
                                 </button>

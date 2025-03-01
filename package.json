@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev:debug": "set NODE_OPTIONS=--inspect && next dev"
   },
   "dependencies": {
     "@next/font": "^14.2.15",
@@ -16,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "3.6.0",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
     "next": "15.1.4",
     "react": "^18.2.0",

@@ -17,14 +17,6 @@ type Input01Props = {
 }
 
 export const Input01 = ({ labelHtmlFor, labelText, colorLabel = "text-[#949494]", typeInput, icon, iconWidth, iconHeight, iconColor, onChange, inputValue, inputHeightTailwind }: Input01Props) => {
-
-    console.log("Color Label: ", colorLabel)
-
-    // Depuração: Monitora mudanças no colorLabel
-    useEffect(() => {
-        console.log("Color Label:", colorLabel);
-    }, [colorLabel]);
-
     
 
     return (
