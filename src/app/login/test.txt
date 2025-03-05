@@ -1,0 +1,41 @@
+/*
+<div id="formLogin">
+  <div className="mb-4 flex flex-col z-20">
+    <Input01 inputValue={loginInput}
+      labelHtmlFor="loginInput"
+      labelText="Login"
+      typeInput="text"
+      inputHeightTailwind="h-10"
+      onChange={setLoginInput}
+      key={"loginInput"}
+      icon="user"
+      iconHeight={20}
+      iconWidth={20}
+      iconColor="#374151"
+    />
+    {errors.loginInput && <p className="text-red-500 text-sm font-bold">{errors.loginInput}</p>}
+  </div>
+
+  <div className="mb-4 flex flex-col z-20">
+    <Input01 inputValue={passwordInput}
+      labelHtmlFor="passwordInput"
+      labelText="Password"
+      typeInput="password"
+      inputHeightTailwind="h-10"
+      onChange={setPasswordInput}
+      key={"passwordInput"}
+      icon="key"
+      iconHeight={20}
+      iconWidth={20}
+      iconColor="#374151"
+    />
+    {errors.passwordInput && <p className="text-red-500 text-sm font-bold">{errors.passwordInput}</p>}
+  </div>
+
+  <button className="p-3 mt-5 h-12 w-36 bg-green-pakistan text-center flex justify-center items-center text-white rounded-md font-semibold"
+    onClick={() => signIn(loginInput, passwordInput)}
+  >
+    Login
+  </button>
+</div>
+/* 

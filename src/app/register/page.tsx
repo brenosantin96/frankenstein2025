@@ -7,10 +7,11 @@ import { Icon } from "../../components/svg/Icon";
 import { useValidation } from "@/hooks/useValidation"; // Importando o hook
 import { Input01 } from "@/components/Input01";
 import Link from "next/link";
-import { useApi } from "@/api/api";
+import { useApi } from "@/api/funcApi";
 
 function RegisterPage() {
     const router = useRouter();
+    const useApiz = useApi();
 
     const [nameInput, setNameInput] = useState("");
     const [emailInput, setEmailInput] = useState("");
@@ -31,7 +32,7 @@ function RegisterPage() {
         if (!validate({ nameInput, emailInput, passwordInput })) return;
 
         try {
-            let successResponse = await useApi.signUp(name, email, password);
+            let successResponse = await useApiz.signUp(name, email, password);
             console.log(successResponse);
             alert("Usuario creado con éxito");
             router.push("/login");

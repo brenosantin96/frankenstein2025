@@ -13,7 +13,7 @@ export const TaskComponent = ({ task }: TaskProps) => {
     return (
         <div key={task.id} className="py-2">
             <div className="text-sm font-inter">
-                <span><input type="checkbox" /> {task.description}</span>
+                <span><input type="checkbox" /> {task.name}</span>
             </div>
             {task.dateToFinish < start &&
                 <div className="text-xs font-bold text-[#BC6C25]">

@@ -7,14 +7,14 @@ import { Icon } from "../../components/svg/Icon";
 import { Input01 } from "@/components/Input01";
 import Link from "next/link";
 import { useValidation } from "@/hooks/useValidation";
-import { useApi } from "@/api/api";
+import { useApi } from "@/api/funcApi";
 
 function LoginPage() {
   const router = useRouter();
+  const useApiz = useApi();
 
   const [loginInput, setLoginInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-
 
 
   const { errors, validate } = useValidation({
@@ -25,25 +25,30 @@ function LoginPage() {
 
   const signIn = async (email: string, password: string) => {
 
-    console.log(email, password);
-
     if (!validate({ loginInput, passwordInput })) return;
 
     try {
-      let successResponse = await useApi.signIn(email, password);
-      console.log(successResponse);
-      router.push("/");
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-    } catch (error: any) {
-      console.log(error);
-      if (error.response.data) {
-        alert(`Ocurrió un error: ${error.response.data.message}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('token', data.token); // Salva o token no localStorage
+        router.push('/');
+      } else {
+        alert("Erro no login: ")
       }
-      if (!error.response.data) {
-        alert(`Ocurrió un error`);
-      }
+
+    } catch (error) {
+      console.error('Erro durante o login:', error);
+      alert('Erro durante o login');
     }
-
 
   }
 
