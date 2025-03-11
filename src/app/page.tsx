@@ -17,6 +17,7 @@ export default async function Home() {
 
     try {
 
+        //this is calling route.ts inside api > tasks 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tasks`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -25,7 +26,7 @@ export default async function Home() {
 
         const tasks = response.data;
 
-        let tasksWithDate = tasks.map((task : any) => (
+        let tasksWithDate = tasks.map((task: any) => (
             {
                 ...task,
                 dateCreated: new Date(task.dateCreated),
@@ -34,8 +35,6 @@ export default async function Home() {
             }
         ));
 
-        console.log(response.data);
-
         return (
 
             <>
@@ -43,8 +42,13 @@ export default async function Home() {
             </>
         );
 
-    } catch (error) {
-        console.error('Erro ao buscar tarefas:', error);
+    } catch (error: any) {
+
+        if (error.status === 401) {
+            redirect('/login')
+        }
+
+        console.error('Erro ao buscar tarefas:', error, error.response.data);
         return <p>Erro ao carregar tarefas.</p>;
 
     }

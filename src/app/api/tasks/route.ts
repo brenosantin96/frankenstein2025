@@ -14,6 +14,9 @@ const axiosConfig = {
 
 export async function GET(request: Request) {
     const authHeader = request.headers.get('Authorization');
+
+    console.log("AuthHeader: ", authHeader);
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return NextResponse.json({ error: 'Token not provided' }, { status: 401 });
     }
@@ -25,10 +28,19 @@ export async function GET(request: Request) {
         const decoded: any = jwtDecode(token);
         console.log('DECODED: ', decoded);
 
+        const exp = decoded.exp * 1000 //getting miliseconds
+        const now = Date.now();
+
+        if(now >= exp){
+            return NextResponse.json({error: 'Token Expirado'}, {status: 401});
+        }
+
         const userId = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
         if (!userId) {
             return NextResponse.json({ error: 'Token inválido: userId não encontrado' }, { status: 401 });
         }
+
+        console.log("USER ID: ", userId)
 
         // Monta a URL da API externa com o userId
         const apiUrl = `${API_URL}/Task/user/${userId}/tasks`;
@@ -43,6 +55,7 @@ export async function GET(request: Request) {
 
         // Retorna as tarefas para o frontend
         return NextResponse.json(response.data, { status: 200 });
+
     } catch (error) {
         console.error('Error fetching tasks:', error);
         return NextResponse.json({ error: 'Erro ao buscar tarefas' }, { status: 500 });

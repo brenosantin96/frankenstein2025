@@ -9,6 +9,8 @@ import Header from "./Header";
 import { endOfDay } from "date-fns";
 import { Icon } from "./svg/Icon";
 import DatePicker from "./DatePicker";
+import { useRouter } from "next/navigation";
+import Modal01 from "./Modal01";
 
 type TaskListProps = {
     allTasks: Task[]
@@ -21,6 +23,9 @@ export default function TaskList({ allTasks }: TaskListProps) {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [isMenuOpened, setIsMenuOpened] = useState(false);
+    const [isCreationTaskModalOpened, setIsCreationModalOpened] = useState(false);
+
+    const router = useRouter();
 
     const handleDateSelect = (selectedDate: Date | undefined) => {
         setSelectedDate(selectedDate); //updating selectedDate
@@ -32,7 +37,7 @@ export default function TaskList({ allTasks }: TaskListProps) {
     }, [tasks])
 
     useEffect(() => {
-        console.log("Alltasks: ",allTasks);
+        console.log("Alltasks: ", allTasks);
     }, [])
 
 
@@ -40,20 +45,21 @@ export default function TaskList({ allTasks }: TaskListProps) {
         <>
             <div className="h-screen text-2xl bg-beige-cornsilk text-green-pakistan">
                 <div className="container mx-auto">
-                    <Header svgLeft="backward" svgRight="menu" onClickRightIcon={() => setIsMenuOpened(true)} title="Tasks" />
+                    <Header svgLeft="backward" svgRight="menu" onClickLeftIcon={() => router.back()} onClickRightIcon={() => setIsMenuOpened(true)} title="Tasks" />
                     <SideMenu menuOpened={isMenuOpened} onClose={() => setIsMenuOpened(false)} />
                     <div className="flex flex-col mt-10">
 
                         <DatePicker handleDateSelect={handleDateSelect} isPopoverOpen={isPopoverOpen} selectedDate={selectedDate} setIsPopoverOpen={setIsPopoverOpen} />
 
                         <div className="flex justify-start pl-4 items-start">
-                            <Icon svg="plus" />
+                            <div onClick={() => setIsCreationModalOpened(true)}>
+                                <Icon svg="plus" />
+                            </div>
                         </div>
 
                         <div id="todayTasks" className="flex flex-col text-[#283618] w-full mt-4 pl-5">
                             {tasks
                                 .filter((task) => {
-                                    console.log("Filtered tasks: ",tasks)
                                     const end = endOfDay(selectedDate ? selectedDate : new Date());
                                     return task.dateToFinish <= end;
                                 })
@@ -81,7 +87,11 @@ export default function TaskList({ allTasks }: TaskListProps) {
                                 ))}
                         </div>
 
+                        {isCreationTaskModalOpened &&
 
+                            <Modal01 isOpen={isCreationTaskModalOpened} handleClose={() => setIsCreationModalOpened(false)} modalTitle="Crear nueva Task" />
+
+                        }
 
                     </div>
                 </div>
